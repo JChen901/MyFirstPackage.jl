@@ -149,7 +149,7 @@ function curl(u::Matrix{Point2D{T}}) where T
         m, n = size(u)
         uy = u[mod1(i + 1, m), j][2] - u[mod1(i - 1, m), j][2]
         ux = u[i, mod1(j + 1, n)][1] - u[i, mod1(j - 1, n)][1]
-        return uy - ux # a factor of 1/2 is missing here?
+        return uy - ux # a fact or of 1/2 is missing here?
     end
 end
 
