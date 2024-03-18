@@ -1,11 +1,11 @@
 using MyFirstPackage
 using LinearAlgebra
 using Makie: RGBA
+using GLMakie
 
 lb = example_d3q19()
 
 initial_state = collect(lb.grid[1].density)
-
 
 
 points = Observable(Point3f[]) # Signal that can be used to update plots efficiently
@@ -18,7 +18,7 @@ fig, ax, l = lines(points, color = colors,
 	axis = (; type = Axis3, protrusions = (0, 0, 0, 0),
 		viewmode = :fit, limits = (0, 40, 0, 50, 0, 50)))
 
-record(fig, "lorenz.mp4", 1:200) do frame
+record(fig, "lorenz.mp4", 1:400) do frame
 	if frame % 10 == 0
 		step!(lb)
 		@show frame
