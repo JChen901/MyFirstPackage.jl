@@ -97,3 +97,19 @@ function example_d3q19(;
 
 	return LatticeBoltzmann3d(D3Q19(), rgrid, barrier)
 end
+
+function curl(u::Matrix{Point3D{T}}) where T
+	return map(CartesianIndices(u)) do ci
+		i, j, k = ci.I
+		m, n, l = size(u)
+		uypx = u[mod1(i + 1, m), j,k][2] - u[mod1(i - 1, m), j,k][2]
+		uxpy = u[i, mod1(j + 1, n),k][1] - u[i, mod1(j - 1, n),k][1]
+
+		uypz = u[i, j, mod1(k + 1, l)][2] - u[i, j, mod1(k - 1, l)][2]
+		uzpy = u[i, mod1(j + 1, n),k][3] - u[i, mod1(j - 1, n),k][3]
+
+		uzpx = u[mod1(i + 1, m), j,k][3] - u[mod1(i - 1, m), j,k][3]
+		uxpz = u[i, j, mod1(k + 1, l)][1] - u[i, j, mod1(k - 1, l)][1]
+		return uzpy - uypz, uxpz - uzpx, uypx - uxpy
+	end
+end
